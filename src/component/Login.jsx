@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import React, { useRef } from 'react';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../firebase.init';
 import Loading from './Loading';
@@ -11,7 +11,9 @@ const Login = () => {
         loading,
         error,
       ] = useSignInWithEmailAndPassword(auth);
+      const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
       const navigate = useNavigate()
+      const emailRef = useRef('')
       const location = useLocation()
       const from = location.state?.from?.pathname || '/' ;
 
@@ -26,7 +28,7 @@ const Login = () => {
      }
 
      if (error) {
-        errorElement = <p className='text-danger text-center mb-3'>Error: {error?.message}</p>
+        errorElement = <p className='text-red-500 text-center mt-3 font-semibold'>Error: {error?.message}</p>
       }
       
       const handelSubmit = (e) => {
@@ -36,6 +38,19 @@ const Login = () => {
         
         signInWithEmailAndPassword(email, password)
     }
+
+
+    const resetPassword = async () => {
+        const email = emailRef.current.value
+        if (email) {
+          await sendPasswordResetEmail(email);
+          alert("Sent email in your spam box");
+         }
+          else{
+          alert("Please enter your email address");
+        }
+        }
+
     return (
         <div>
             <div className="hero min-h-screen bg-base-200">
@@ -49,7 +64,7 @@ const Login = () => {
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input name='email' type="text" placeholder="email" className="input input-bordered" />
+                                <input ref={emailRef} name='email' type="text" placeholder="email" className="input input-bordered" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
@@ -58,10 +73,10 @@ const Login = () => {
                                 <input name='password' type="text" placeholder="password" className="input input-bordered" />
                                 <div className='flex justify-between'>
                                 <label className="label">
-                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                                    <button onClick={resetPassword} className="label-text-alt link link-hover text-sm">Forgot password?</button>
                                 </label>
                                 <label className="label">
-                                    <Link to='/register' href="#" className="label-text-alt link link-hover">Create new account</Link>
+                                    <Link to='/register' className="text-sm label-text-alt link link-hover">Create new account</Link>
                                 </label>
                                 </div>
                                 {errorElement}

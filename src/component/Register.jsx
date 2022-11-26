@@ -18,17 +18,17 @@ const Register = () => {
     let errorElement;
 
 
-    if(loading) {
-        return <Loading/>
-     }
+    if (loading) {
+        return <Loading />
+    }
 
-     if(user) {
-       navigate('/home')
-     }
+    if (user) {
+        navigate('/home')
+    }
 
-     if (error) {
+    if (error) {
         errorElement = <p className='text-red-500 text-center mb-3'>Error: {error?.message}</p>
-      }
+    }
 
 
     const handelSubmit = async (e) => {
@@ -69,14 +69,9 @@ const Register = () => {
                                     <span className="label-text">Password</span>
                                 </label>
                                 <input name='password' type="text" placeholder="password" className="input input-bordered" />
-                                <div className='flex justify-between'>
-                                    <label className="label">
-                                        <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                                    </label>
-                                    <label className="label">
-                                        <Link to='/login' href="#" className="label-text-alt link link-hover">Login now</Link>
-                                    </label>
-                                </div>
+                                <label className="label">
+                                    <Link to='/login' href="#" className="label-text-alt link link-hover text-blue-600 text-sm">Login now</Link>
+                                </label>
                                 {errorElement}
                             </div>
                             <div className="form-control mt-6">
