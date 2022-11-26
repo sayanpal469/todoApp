@@ -10,6 +10,9 @@ function App() {
     <div>
       <Nav/>
       <Routes>
+        <Route path='/' element={ <RequireAuth>
+          <Home/>
+        </RequireAuth> }></Route>   
         <Route path='/home' element={ <RequireAuth>
           <Home/>
         </RequireAuth> }></Route>   

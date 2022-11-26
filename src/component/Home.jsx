@@ -1,37 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import TodoRaw from './TodoRaw';
 
-const home = () => {
+const Home = () => {
+
+    const [todoData, setTododata] = useState([])
+
+    useEffect(() => {
+        const url = `https://dummyjson.com/todos`
+        fetch(url)
+        .then(res => res.json())
+        .then(data => setTododata(data.todos))
+    },[])
+
+
     return (
-        <div>
+        <div className='px-14'>
             <div className="overflow-x-auto">
                 <table className="table w-full ">
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
+                            <th>Todo</th>
+                            <th>Status</th>
+                            <th>User Id</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>Hart Hagerty</td>
-                            <td>Desktop Support Technician</td>
-                            <td>Purple</td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>Brice Swyre</td>
-                            <td>Tax Accountant</td>
-                            <td>Red</td>
-                        </tr>
+                        {
+                            todoData.map(data => <TodoRaw key={data.id} data={data}></TodoRaw>)
+                        }
+                        
                     </tbody>
                 </table>
             </div>
@@ -39,4 +37,4 @@ const home = () => {
     );
 };
 
-export default home;
+export default Home;
