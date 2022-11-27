@@ -7,7 +7,7 @@ const AddTodo = ({ todoData, setTododata }) => {
         const todo = e.target.task.value;
         const completed = e.target.radioStatus.value;
         const userId = e.target.userId.value;
-        console.log(completed);
+        // console.log(completed);
 
         fetch('https://dummyjson.com/todos/add', {
             method: 'POST',
@@ -20,15 +20,16 @@ const AddTodo = ({ todoData, setTododata }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 setTododata([...todoData, { ...data, id: todoData.length + 1 }])
             })
+        setTododata(null)
     }
 
     // console.log(todoData)
 
     return (
-        <div className='mb-3'>
+        <div className='my-3'>
             {/* The button to open modal */}
             <label htmlFor="my-modal-6" className="btn btn-primary">Add Task</label>
 
@@ -64,9 +65,7 @@ const AddTodo = ({ todoData, setTododata }) => {
                         </div>
 
                         <div className="mt-5 text-center">
-                            <label>
-                                <input htmlFor="my-modal-6" type='submit' value='Add' className='btn' />
-                            </label>
+                            <input htmlFor="my-modal-6" type='submit' value='Add' className='btn' />
                         </div>
                     </form>
                 </div>

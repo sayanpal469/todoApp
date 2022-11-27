@@ -7,7 +7,7 @@ const Home = () => {
     const [todoData, setTododata] = useState([])
 
     useEffect(() => {
-        const url = `https://dummyjson.com/todos/?limit=5`
+        const url = `https://dummyjson.com/todos/?limit=200`
         fetch(url)
             .then(res => res.json())
             .then(data => {
