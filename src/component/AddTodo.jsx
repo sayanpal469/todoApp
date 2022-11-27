@@ -1,4 +1,3 @@
-import { parse } from "postcss";
 
 const AddTodo = ({ todoData, setTododata }) => {
 
@@ -20,8 +19,13 @@ const AddTodo = ({ todoData, setTododata }) => {
             })
         })
             .then(res => res.json())
-            .then(data => setTododata([...todoData, { ...data, id: todoData.length + 1 }]))
+            .then(data => {
+                console.log(data);
+                setTododata([...todoData, { ...data, id: todoData.length + 1 }])
+            })
     }
+
+    // console.log(todoData)
 
     return (
         <div className='mb-3'>
@@ -31,7 +35,9 @@ const AddTodo = ({ todoData, setTododata }) => {
             <input type="checkbox" id="my-modal-6" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
+
                     <label htmlFor="my-modal-6" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+
                     <form onSubmit={addTodo} className="m-auto w-full max-w-sm">
                         <div className="form-control">
                             <input required name='task' type="text" placeholder="Task" className="input input-bordered" />
@@ -58,7 +64,7 @@ const AddTodo = ({ todoData, setTododata }) => {
                         </div>
 
                         <div className="mt-5 text-center">
-                            <label >
+                            <label>
                                 <input htmlFor="my-modal-6" type='submit' value='Add' className='btn' />
                             </label>
                         </div>
